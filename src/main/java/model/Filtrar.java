@@ -94,6 +94,10 @@ public class Filtrar {
     public String FiltroTitulo(String titulo) throws TransformerException, ParserConfigurationException {
         return FiltroGeral("titulo", titulo);
     }
+    
+    public String FiltroAno(String ano) throws TransformerException, ParserConfigurationException {
+        return FiltroGeral("ano", ano);
+    }
 
     public boolean existeAutor(Element noLivro, String autor) {
 

@@ -34,16 +34,21 @@ public class Controller extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String autor = request.getParameter("autor");
         String titulo = request.getParameter("titulo");
+        String ano = request.getParameter("ano");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String caminho = getServletContext().getRealPath("/WEB-INF/livraria.xml");
             try {
                 Filtrar filtro = new Filtrar(caminho);
-                if(autor != null)
+                if(autor != null){
                     out.println(filtro.FiltroAutor(autor));
-                
-                if(titulo != null)             
+                }
+                if(titulo != null) {            
                     out.println(filtro.FiltroTitulo(titulo));
+                }
+                if(ano != null){
+                    out.println(filtro.FiltroAno(ano));
+                }
             } catch (Exception ex) {
                 out.println("<erro>" + ex.toString() + "</erro>");
             }

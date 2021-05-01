@@ -16,6 +16,24 @@ function buscarAutor(){
     criaAjax("http://localhost:8080/MavenLivraria/Controller","autor="+nomeAutor,mostrar);
     
 }
+function buscarAno(){
+    ano=document.getElementById("texto").value;
+    criaAjax("http://localhost:8080/MavenLivraria/Controller","ano="+ano,mostrar);
+    
+}
+
+function buscarPreco(){
+    preco=document.getElementById("texto").value;
+    criaAjax("http://localhost:8080/MavenLivraria/Controller","preco="+preco,mostrar);
+    
+}
+/*
+function buscarAutor(){
+    nomeAutor=document.getElementById("texto").value;
+    criaAjax("http://localhost:8080/MavenLivraria/Controller","autor="+nomeAutor,mostrar);
+    
+} */
+
 function mostrar()
 {
    
@@ -49,7 +67,13 @@ document.getElementById("botaoPreco").onclick = function() {
     var precos = document.getElementsByName("preco");
     for (var i = 0; i < precos.length; i++) {
         if (precos[i].checked) {
-            console.log("Escolheu: " + precos[i].value);
+            if(precos[i].value == "PrecoMin"){
+                console.log("Preço minimo");
+            }
+            if(precos[i].value == "PrecoMax"){
+                console.log("Preço Maximo");
+            }
+            //console.log("Escolheu: " + precos[i].value);
         }
     }
 };
@@ -65,7 +89,11 @@ document.getElementById("botaoFiltro").onclick = function() {
             if(filtro[i].value == "Titulo"){
                 console.log("Titulo");
                 buscarPorTitulo();
-            }           
+            }
+            if(filtro[i].value == "Ano") {
+                console.log("ano");
+                buscarAno();
+            }
         }
     }
 };
