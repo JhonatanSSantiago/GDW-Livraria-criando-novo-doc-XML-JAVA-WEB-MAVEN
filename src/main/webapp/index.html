@@ -6,17 +6,30 @@
         <link rel="stylesheet" href="estilo.css">
     </head>
     <body>
-         <h1>Livraria</h1>
+         <h1>Livraria</h1>     
         <form>
-            <label for="titulo">Título</label>
-            <input type="text" id="titulo">
-            <input type="button" id="botao" value="Filtrar">
-            <br>
-            <label for="autor">Autor</label>
-            <input type="text" id="autor">
-            <input type="button" id="botaoAutor" value="Filtrar">
+            <label>Filtrar por:</label>               
+                <input type="radio" id="Autor" name="filtro" value="Autor">
+                <label for="Autor">Autor </label>
+                <input type="radio" id="Titulo" name="filtro" value="Titulo">
+                <label for="Titulo">Titulo </label>
+                <input type="text" id="texto" placeholder="Autor ou Titulo">
+                <input type="button" id="botaoFiltro" value="Filtrar">
         </form>
-        <article id="resultado"></article>
+         <form>
+            <label>Preço:</label>
+                <input type="text" id="preco" placeholder="valor">
+                <input type="radio" id="PrecoMin" name="preco" value="PrecoMin">
+                <label for="PrecoMin">Min</label>
+                <input type="radio" id="PrecoMax" name="preco" value="PrecoMax">
+                <label for="PrecoMax">Max</label>
+                <input type="button" id="botaoPreco" value="Filtrar">
+        </form>
+        <br>
+
+
+
+        <div id="resultado"></div>
         <script src="codigo.js"></script>
     </body>
 </html>

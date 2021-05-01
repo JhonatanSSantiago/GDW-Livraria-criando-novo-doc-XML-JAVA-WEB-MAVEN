@@ -7,12 +7,12 @@ function criaAjax(url,dados,funcao)
 }
 function buscarPorTitulo()
 {
-    nomeTitulo=document.getElementById("titulo").value;
+    nomeTitulo=document.getElementById("texto").value;
     criaAjax("http://localhost:8080/MavenLivraria/Controller","titulo="+nomeTitulo,mostrar);
 }
 
 function buscarAutor(){
-    nomeAutor=document.getElementById("autor").value;
+    nomeAutor=document.getElementById("texto").value;
     criaAjax("http://localhost:8080/MavenLivraria/Controller","autor="+nomeAutor,mostrar);
     
 }
@@ -43,5 +43,29 @@ function pegaLivro(livro)
     }
     return texto+"</div>";
 }
-document.getElementById("botao").onclick=buscarPorTitulo;
-document.getElementById("botaoAutor").onclick=buscarAutor;
+
+
+document.getElementById("botaoPreco").onclick = function() {
+    var precos = document.getElementsByName("preco");
+    for (var i = 0; i < precos.length; i++) {
+        if (precos[i].checked) {
+            console.log("Escolheu: " + precos[i].value);
+        }
+    }
+};
+
+document.getElementById("botaoFiltro").onclick = function() {
+    var filtro = document.getElementsByName("filtro")
+    for (var i = 0; i < filtro.length; i++) {
+        if (filtro[i].checked) {
+            if(filtro[i].value == "Autor"){
+                console.log("autor");
+                buscarAutor();
+            }
+            if(filtro[i].value == "Titulo"){
+                console.log("Titulo");
+                buscarPorTitulo();
+            }           
+        }
+    }
+};
