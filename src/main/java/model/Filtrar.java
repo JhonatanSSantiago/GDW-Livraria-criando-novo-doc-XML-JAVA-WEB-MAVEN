@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 /**
@@ -46,24 +47,51 @@ public class Filtrar {
         transformador.transform(fonte, saida);
         return fluxo.toString();
     }
-
-    private String FiltroGeral(String tag, String valor) throws TransformerException {
+    
+    private Document newDocLivraria() throws ParserConfigurationException {
+        Document newDoc;
+        DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
+        DocumentBuilder construtor = fabrica.newDocumentBuilder();
+        newDoc = construtor.newDocument();
+        Element livraria=newDoc.createElement("livraria");
+        newDoc.appendChild(livraria);
+        return newDoc;
+    }
+    
+    private void CopyForNewDoc(Node original, Document newDoc){
+        NodeList filhos=original.getChildNodes();
+        int tam = filhos.getLength();
+        Element newBook=newDoc.createElement("livro");
+        for(int i=0; i<tam ; i++) {
+            Node filho=filhos.item(i);
+            if(filho.getNodeType()==Node.ELEMENT_NODE){
+                Element newTag = newDoc.createElement(filho.getNodeName());
+                Text newText = newDoc.createTextNode(filho.getFirstChild().getNodeValue());
+                newTag.appendChild(newText);
+                newBook.appendChild(newTag);
+            }
+        }
+        newDoc.getDocumentElement().appendChild(newBook);
+    }
+    
+    private String FiltroGeral(String tag, String valor) throws TransformerException, ParserConfigurationException  {
+        Document newDoc=newDocLivraria();
         Node noLivro = null;
         NodeList filhos = doc.getElementsByTagName(tag);
         int tam = filhos.getLength();
-        for (int i = tam - 1; i >= 0; i--) {
+        for (int i = 0; i < tam; i++) {
             Node noFilho = filhos.item(i);
             if (noFilho != null) {
-                if (!noFilho.getFirstChild().getNodeValue().equals(valor)) {
+                if (noFilho.getFirstChild().getNodeValue().equals(valor)) {
                     noLivro = noFilho.getParentNode();
-                    noLivro.getParentNode().removeChild(noLivro);
+                    CopyForNewDoc(noLivro, newDoc);
                 }
             }
         }
-        return serealizar(doc);
+        return serealizar(newDoc);
     }
 
-    public String FiltroTitulo(String titulo) throws TransformerException {
+    public String FiltroTitulo(String titulo) throws TransformerException, ParserConfigurationException {
         return FiltroGeral("titulo", titulo);
     }
 
@@ -82,18 +110,19 @@ public class Filtrar {
         return false;
     }
     
-    public String FiltroAutor(String autor) throws TransformerException{
+    public String FiltroAutor(String autor) throws TransformerException, ParserConfigurationException{
         NodeList noLivros=doc.getElementsByTagName("livro");
         int tam=noLivros.getLength();
-        for(int i=tam-1;i>=0;i--)
+        Document newDoc=newDocLivraria();
+        for(int i=0; i<tam ;i++)
         {
             Element noLivro=(Element)noLivros.item(i);
-            if(!existeAutor(noLivro,autor))
+            if(existeAutor(noLivro,autor))
             {
-                noLivro.getParentNode().removeChild(noLivro);
+                CopyForNewDoc(noLivro, newDoc);
             }
         }
-        return serealizar(doc);
+        return serealizar(newDoc);
     }
     
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, TransformerException {
