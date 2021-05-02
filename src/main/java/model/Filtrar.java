@@ -129,9 +129,27 @@ public class Filtrar {
         return serealizar(newDoc);
     }
     
+    public String FiltroPreco(double preco) throws TransformerException, ParserConfigurationException{
+        NodeList noPrecos=doc.getElementsByTagName("preco");
+        Node noLivro = null;
+        int tam=noPrecos.getLength();
+        Document newDoc=newDocLivraria();
+        for(int i=0; i<tam ;i++)
+        {
+            Element noPreco=(Element)noPrecos.item(i);
+            String  valor = noPreco.getFirstChild().getNodeValue();
+            double numeroConvertido = Double.parseDouble(valor);
+            if(numeroConvertido<= preco){
+                noLivro = noPreco.getParentNode();
+                CopyForNewDoc(noLivro, newDoc);          
+            }               
+        }
+        return serealizar(newDoc);
+    }
+    
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, TransformerException {
-       // Filtrar filtra = new Filtrar("src/java/model/livraria.xml");
-       // System.out.println(filtra.FiltroTitulo("Harry Potter"));
+     //   Filtrar filtra = new Filtrar("src/main/java/model/livraria.xml");
+     //   System.out.println(filtra.FiltroPreco(30));
 
     }
 

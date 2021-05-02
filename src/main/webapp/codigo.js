@@ -27,12 +27,6 @@ function buscarPreco(){
     criaAjax("http://localhost:8080/MavenLivraria/Controller","preco="+preco,mostrar);
     
 }
-/*
-function buscarAutor(){
-    nomeAutor=document.getElementById("texto").value;
-    criaAjax("http://localhost:8080/MavenLivraria/Controller","autor="+nomeAutor,mostrar);
-    
-} */
 
 function mostrar()
 {
@@ -63,36 +57,21 @@ function pegaLivro(livro)
 }
 
 
-document.getElementById("botaoPreco").onclick = function() {
-    var precos = document.getElementsByName("preco");
-    for (var i = 0; i < precos.length; i++) {
-        if (precos[i].checked) {
-            if(precos[i].value == "PrecoMin"){
-                console.log("Preço minimo");
-            }
-            if(precos[i].value == "PrecoMax"){
-                console.log("Preço Maximo");
-            }
-            //console.log("Escolheu: " + precos[i].value);
-        }
-    }
-};
-
 document.getElementById("botaoFiltro").onclick = function() {
-    var filtro = document.getElementsByName("filtro")
+    var filtro = document.getElementsByName("filtro");
     for (var i = 0; i < filtro.length; i++) {
         if (filtro[i].checked) {
             if(filtro[i].value == "Autor"){
-                console.log("autor");
                 buscarAutor();
             }
             if(filtro[i].value == "Titulo"){
-                console.log("Titulo");
                 buscarPorTitulo();
             }
             if(filtro[i].value == "Ano") {
-                console.log("ano");
                 buscarAno();
+            }
+            if(filtro[i].value == "Preco") {
+                buscarPreco();
             }
         }
     }

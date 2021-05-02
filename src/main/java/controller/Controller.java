@@ -35,6 +35,7 @@ public class Controller extends HttpServlet {
         String autor = request.getParameter("autor");
         String titulo = request.getParameter("titulo");
         String ano = request.getParameter("ano");
+        String preco = request.getParameter("preco");       
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String caminho = getServletContext().getRealPath("/WEB-INF/livraria.xml");
@@ -49,6 +50,11 @@ public class Controller extends HttpServlet {
                 if(ano != null){
                     out.println(filtro.FiltroAno(ano));
                 }
+                if(preco != null){
+                    double precoConvertido = Double.parseDouble(preco);
+                    out.println(filtro.FiltroPreco(precoConvertido));
+                }             
+                
             } catch (Exception ex) {
                 out.println("<erro>" + ex.toString() + "</erro>");
             }

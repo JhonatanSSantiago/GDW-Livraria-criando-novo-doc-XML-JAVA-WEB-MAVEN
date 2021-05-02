@@ -1,8 +1,15 @@
 div{
     border:solid black 1px;
-    marging:2em;
+    margin:10px;
+    padding: 10px;
 }
-
-#preco {
-    width: 60px;
+p{
+    margin-left: 2px;
+}
+b {
+    margin-left: 2px;
+}
+body {
+    padding: 10px;
+   
 }
